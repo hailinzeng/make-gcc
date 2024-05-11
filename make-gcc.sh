@@ -594,10 +594,10 @@ function build_gcc() {
         local CachedPkg="${BLD_CACHE_DIR}/$LocalDir.tar"
         if [ ! -f $CachedPkg ] ; then
             # Try the location for newer versions first.
-            _exec_nox curl --fail -L https://ftp.gnu.org/gnu/gcc/$LocalDir/$LocalDir.tar.xz --out $CachedPkg
+            _exec_nox curl --fail -L https://ftp.gnu.org/gnu/gcc/$LocalDir/$LocalDir.tar.xz --output $CachedPkg
             if (( $? )) ; then
                 # It failed, now try locations for older versions.
-                _exec curl --fail -L https://ftp.gnu.org/gnu/gcc/$LocalDir/$LocalDir.tar.bz2 --out $CachedPkg
+                _exec curl --fail -L https://ftp.gnu.org/gnu/gcc/$LocalDir/$LocalDir.tar.bz2 --output $CachedPkg
             fi
         fi
 
@@ -624,6 +624,7 @@ function build_gcc() {
               --enable-checking \
               --enable-__cxa_atexit \
               --enable-gnu-indirect-function \
+              --disable-libsanitizer \
               --disable-bootstrap \
               ${OPT_GCC_EXTRA_CONF_OPTS}
         _exec make clean
